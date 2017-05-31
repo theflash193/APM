@@ -25,18 +25,34 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCollectionViewCell
         
+        let url = URL(string: URLRessource[indexPath.row])
+        let configuration = URLSessionConfiguration.ephemeral
+        let session = URLSession(configuration: configuration)
+        let task = session.dataTask(with: url!) { (data, reponse, error) in
+            if error == nil {
+                if let httpreponse = reponse as? HTTPURLResponse {
+                    switch httpreponse.statusCode {
+                    case 200:
+                        cell.Image.image = UIImage(data: data!)
+                        print("succed")
+                    default:
+                        print("fail to fetch image")
+                    }
+                }
+            } else {
+                print(error.debugDescription)
+            }
+        }
+        task.resume()
+        // request online
         return cell
     }
     
-    func load_image(image_url_string:String, view:UIImageView)
-    {
-        
-    }
 }
 
