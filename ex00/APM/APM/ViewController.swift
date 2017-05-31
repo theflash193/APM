@@ -9,8 +9,21 @@
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
+    // define background qos class
+    // define queue with qos
+    var qos: DispatchQoS.QoSClass {
+        return DispatchQoS.background.qosClass
+    }
+    
+    var queue: DispatchQueue {
+        return DispatchQueue.global(qos: qos)
+    }
+//    var queue: DispatchQueue
+    
     let URLRessource = ["https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/a3411.jpg?itok=oxF0ZLL0", "https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/pia14454.jpg?itok=6C1bhU6q", "https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/potw1652a.jpg?itok=5osF5N3n", "https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/aurora_vir_2016357_lrg.jpg?itok=t_C47OWx"]
+    
     @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -32,13 +45,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCollectionViewCell
         
         let url = URL(string: URLRessource[indexPath.row])
-        let configuration = URLSessionConfiguration.ephemeral
+        let configuration = URLSessionConfiguration.default
         let session = URLSession(configuration: configuration)
+        
         let task = session.dataTask(with: url!) { (data, reponse, error) in
             if error == nil {
                 if let httpreponse = reponse as? HTTPURLResponse {
                     switch httpreponse.statusCode {
                     case 200:
+                        DispatchQueue.main.async {
+                            let image = UIImage(data: data!)
+                            cell.Image.image = image
+                        }
                         cell.Image.image = UIImage(data: data!)
                         print("succed")
                     default:
