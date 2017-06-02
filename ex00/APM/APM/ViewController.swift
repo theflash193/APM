@@ -21,7 +21,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
 //    var queue: DispatchQueue
     
-    let URLRessource = ["https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/a3411.jpg?itok=oxF0ZLL0", "https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/pia14454.jpg?itok=6C1bhU6q", "https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/potw1652a.jpg?itok=5osF5N3n", "https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/aurora_vir_2016357_lrg.jpg?itok=t_C47OWx"]
+    let URLRessource = ["https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/a3411.jpg?itok=oxF0ZLL0", "https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/pia14454.jpg?itok=6C1bhU6q", "https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/potw1652a.jpg?itok=5osF5N3n", "https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/aurora_vir_2016357_lrg.jpg?itok=t_C47OWx", "https://jojo"]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -31,6 +31,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        let Alert = UIAlertController(title: "Hello world", message: "This is an alert", preferredStyle: UIAlertControllerStyle.alert)
+        self.present(Alert, animated: false, completion: nil)
+        print("hello world")
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,7 +42,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -48,6 +51,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let url = URL(string: URLRessource[indexPath.row])
         let configuration = URLSessionConfiguration.default
         let session = URLSession(configuration: configuration)
+        
+        // animate ActivityMonitor
+        cell.ActivityMonitor.startAnimating()
         
         let task = session.dataTask(with: url!) { (data, reponse, error) in
             if error == nil {
@@ -58,20 +64,32 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                             UIApplication.shared.isNetworkActivityIndicatorVisible = true
                             let image = UIImage(data: data!)
                             cell.Image.image = image
+                            cell.ActivityMonitor.stopAnimating()
                             cell.ActivityMonitor.isHidden = true
                             UIApplication.shared.isNetworkActivityIndicatorVisible = false
                         }
                     default:
-                        print("fail to fetch image")
+                        self.ShowErrorAlert(message: "Server send statut code error for " + self.URLRessource[indexPath.row])
                     }
                 }
             } else {
-                print(error.debugDescription)
+                self.ShowErrorAlert(message: "fail to Access to " + self.URLRessource[indexPath.row])
+                cell.ActivityMonitor.stopAnimating()
             }
         }
         task.resume()
         // request online
         return cell
+    }
+    
+    // create an Alert whit ok
+    func ShowErrorAlert(message: String) {
+        let Alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let ActionCancel = UIAlertAction(title: "Ok", style: .default) { _ in
+            Alert.dismiss(animated: true, completion: nil)
+        }
+        Alert.addAction(ActionCancel)
+        self.present(Alert, animated: true, completion: nil)
     }
 }
 
