@@ -14,6 +14,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var qos: DispatchQoS.QoSClass {
         return DispatchQoS.background.qosClass
     }
+    // counter Image download
     
     var queue: DispatchQueue {
         return DispatchQueue.global(qos: qos)
@@ -38,7 +39,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -54,11 +55,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     switch httpreponse.statusCode {
                     case 200:
                         DispatchQueue.main.async {
+                            UIApplication.shared.isNetworkActivityIndicatorVisible = true
                             let image = UIImage(data: data!)
                             cell.Image.image = image
+                            cell.ActivityMonitor.isHidden = true
+                            UIApplication.shared.isNetworkActivityIndicatorVisible = false
                         }
-                        cell.Image.image = UIImage(data: data!)
-                        print("succed")
                     default:
                         print("fail to fetch image")
                     }
@@ -71,6 +73,5 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // request online
         return cell
     }
-    
 }
 

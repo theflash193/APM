@@ -8,7 +8,18 @@
 
 import UIKit
 
+enum Status {
+    case Download
+    case finish
+}
+
 class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var Image: UIImageView!
+    
+    @IBOutlet weak var ActivityMonitor: UIActivityIndicatorView!
+    
+    var status: Status {
+        return Status.Download
+    }
     
 }

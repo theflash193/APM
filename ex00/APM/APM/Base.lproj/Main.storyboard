@@ -42,16 +42,22 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2m7-rg-4aK">
                                                     <rect key="frame" x="0.0" y="0.0" width="184" height="103"/>
                                                 </imageView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="3Ir-vN-aNI">
+                                                    <rect key="frame" x="82" y="41" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="2m7-rg-4aK" secondAttribute="bottom" id="DOO-kk-t5x"/>
+                                            <constraint firstItem="3Ir-vN-aNI" firstAttribute="centerX" secondItem="2m7-rg-4aK" secondAttribute="centerX" id="Mnj-yW-u7L"/>
+                                            <constraint firstItem="3Ir-vN-aNI" firstAttribute="centerY" secondItem="2m7-rg-4aK" secondAttribute="centerY" id="cPD-G6-iIQ"/>
                                             <constraint firstItem="2m7-rg-4aK" firstAttribute="top" secondItem="oJb-0a-xLb" secondAttribute="top" id="d07-oU-uga"/>
                                             <constraint firstAttribute="trailing" secondItem="2m7-rg-4aK" secondAttribute="trailing" id="pOF-GW-E84"/>
                                             <constraint firstItem="2m7-rg-4aK" firstAttribute="leading" secondItem="oJb-0a-xLb" secondAttribute="leading" id="q74-yy-xSL"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="ActivityMonitor" destination="3Ir-vN-aNI" id="UuF-P2-yz4"/>
                                             <outlet property="Image" destination="2m7-rg-4aK" id="BIL-B1-9j2"/>
                                         </connections>
                                     </collectionViewCell>
