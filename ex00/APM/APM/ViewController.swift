@@ -30,10 +30,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Do any additional setup after loading the view, typically from a nib.
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        let Alert = UIAlertController(title: "Hello world", message: "This is an alert", preferredStyle: UIAlertControllerStyle.alert)
-        self.present(Alert, animated: false, completion: nil)
-        print("hello world")
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,6 +71,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             } else {
                 self.ShowErrorAlert(message: "fail to Access to " + self.URLRessource[indexPath.row])
                 cell.ActivityMonitor.stopAnimating()
+                cell.ActivityMonitor.isHidden = false
             }
         }
         task.resume()
@@ -86,7 +83,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func ShowErrorAlert(message: String) {
         let Alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
         let ActionCancel = UIAlertAction(title: "Ok", style: .default) { _ in
-            Alert.dismiss(animated: true, completion: nil)
+            Alert.dismiss(animated: true)
         }
         Alert.addAction(ActionCancel)
         self.present(Alert, animated: true, completion: nil)
