@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ImageViewController: UIViewController {
+class ImageViewController: UIViewController, UIScrollViewDelegate {
     var image: UIImage?
     var ImageView: UIImageView?
     @IBOutlet weak var ScrollView: UIScrollView!
@@ -21,6 +21,9 @@ class ImageViewController: UIViewController {
             ImageView = UIImageView(image: img)
             ScrollView.addSubview(ImageView!)
             ScrollView.contentSize = (ImageView?.frame.size)!
+            ScrollView.delegate = self
+            ScrollView.maximumZoomScale = 100
+            ScrollView.minimumZoomScale = 0.3
         }
     }
     
@@ -29,7 +32,8 @@ class ImageViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return ImageView
+    }
     // create an Alert whit ok
 }
