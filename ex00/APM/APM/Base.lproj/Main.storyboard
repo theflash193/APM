@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7kG-UE-lRw">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7kG-UE-lRw">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -59,7 +59,7 @@
                                         <connections>
                                             <outlet property="ActivityMonitor" destination="3Ir-vN-aNI" id="UuF-P2-yz4"/>
                                             <outlet property="Image" destination="2m7-rg-4aK" id="BIL-B1-9j2"/>
-                                            <segue destination="dNT-2l-83n" kind="show" id="uo8-Zc-ynj"/>
+                                            <segue destination="dNT-2l-83n" kind="show" identifier="EnvoieImage" id="uo8-Zc-ynj"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -93,13 +93,27 @@
                     <view key="view" contentMode="scaleToFill" id="L4S-Xq-qm8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6J6-La-aw8">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6J6-La-aw8" firstAttribute="bottom" secondItem="ARC-g9-yKK" secondAttribute="top" id="M5c-fL-Gp9"/>
+                            <constraint firstAttribute="trailing" secondItem="6J6-La-aw8" secondAttribute="trailing" id="TrI-Y6-9I2"/>
+                            <constraint firstItem="6J6-La-aw8" firstAttribute="top" secondItem="L4S-Xq-qm8" secondAttribute="top" id="een-uA-fe1"/>
+                            <constraint firstItem="6J6-La-aw8" firstAttribute="leading" secondItem="L4S-Xq-qm8" secondAttribute="leading" id="jjb-Ju-9IZ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Image" id="QRP-gF-S4I"/>
+                    <connections>
+                        <outlet property="ScrollView" destination="6J6-La-aw8" id="m7m-yg-WRA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NYl-at-37z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1694" y="14"/>
+            <point key="canvasLocation" x="1693.5999999999999" y="13.943028485757123"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MBZ-mb-upb">

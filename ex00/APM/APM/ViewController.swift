@@ -88,5 +88,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         Alert.addAction(ActionCancel)
         self.present(Alert, animated: true, completion: nil)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EnvoieImage" {
+            if let destination = segue.destination as? ImageViewController {
+                if let cell = sender as? PhotoCollectionViewCell {
+                    destination.image = cell.Image.image
+                }
+            }
+        }
+    }
 }
 
